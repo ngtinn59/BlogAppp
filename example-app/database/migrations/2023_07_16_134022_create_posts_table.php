@@ -18,14 +18,20 @@ return new class extends Migration
             $table->string('content')->nullable();
             $table->string('image')->nullable();
             $table->string('view_counts')->default(0);
-            $table->unsignedSmallInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('new_post')->default(0);
             $table->string('slug');
-            $table->unsignedSmallInteger('category_id');
+            $table->unsignedBigInteger('category_id');
             $table->boolean('highlight_post');
-
-
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->cascadeOnDelete();
+
+            $table->foreign('category_id')
+                ->references('id')->on('categories')
+                ->cascadeOnDelete();
         });
     }
 
